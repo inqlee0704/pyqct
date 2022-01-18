@@ -10,7 +10,7 @@ Calculate some QCTs and combine QCTs calculated in previous steps.
 ## run extract_QCT
 python extract_QCT.py Proj_path Demo_path Proj
 ```
-python extract_QCT.py sample_data/ENV18PM/ENV18PM_PMSN12001 sample_data/ENV18PM_demo.csv ENV18PM
+python extract_QCT.py sample_data/ENV18PM sample_data/ENV18PM_demo.csv ENV18PM
 ```
 
 ## QCTs calculated in extract_QCT:
