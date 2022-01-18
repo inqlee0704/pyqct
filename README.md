@@ -36,8 +36,7 @@ outputs
 
 ## Deploy
 ```bash
-cd QCT
-./deploy_step16.sh sample_data/ENV18PM
+./deploy_QCT.sh sample_data/ENV18PM/
 ```
 ## Airtrapping
 
