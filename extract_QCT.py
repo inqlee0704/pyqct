@@ -8,6 +8,9 @@
 # Run Time: ~1 min
 # Ref: ENV18PM.drawio
 # ##############################################################################
+# extract_QCT.py (No version suffix): 20220118, In Kyu Lee
+# Use git to maintain different versions.
+# ##############################################################################
 # v2h: 20211031, In Kyu Lee
 # - Minor error fixed: Airtrap -> AirT.
 # v2g: 20211031, Jiwoong Choi
