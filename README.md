@@ -35,6 +35,7 @@ outputs
 # QCTs
 
 ## Deploy
+./deploy_QCT.sh Proj_path/
 ```bash
 ./deploy_QCT.sh sample_data/ENV18PM/
 ```
