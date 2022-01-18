@@ -35,7 +35,7 @@ outputs
 # QCTs
 
 ## Deploy
-```
+```bash
 cd QCT
 ./deploy_step16.sh sample_data/ENV18PM
 ```
