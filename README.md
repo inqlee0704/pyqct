@@ -9,9 +9,9 @@ pyqct is a python repository to calculate and extract Quantitative Computed Tomo
 Calculate some QCTs and combine QCTs calculated in previous steps.
 ## run extract_QCT
 python extract_QCT.py Proj_path Demo_path Proj
-'''
+```
 python extract_QCT.py data/sample_Proj/Proj_Subj data/sample_demo.csv ENV18PM
-'''
+```
 
 ## QCTs calculated in extract_QCT:
 - Circularity
