@@ -23,6 +23,7 @@ python extract_QCT.py sample_data/ENV18PM sample_data/ENV18PM_demo.csv ENV18PM
 
 
 Inputs:
+- Project folder: sample_data/ENV18PM
 - demographics: sample_data/ENV18PM_demo.csv
 
 
