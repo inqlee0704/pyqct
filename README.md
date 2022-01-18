@@ -38,6 +38,9 @@ outputs
 ./deploy_QCT.sh Proj_path/
 ```bash
 ./deploy_QCT.sh sample_data/ENV18PM/
+# run for each subject
+cd sample_data/ENV18PM/ENV18PM_PMSN12002/
+./step16.sh PMSN12002
 ```
 ## Airtrapping
 
