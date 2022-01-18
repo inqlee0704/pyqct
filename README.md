@@ -33,3 +33,20 @@ outputs
 
 
 # QCTs
+
+## Deploy
+```
+cd QCT
+./deploy_step16.sh sample_data/ENV18PM
+```
+## Airtrapping
+
+## Emph_fSAD
+
+## HAA
+
+## S_norm
+
+## RRAVC
+
+
