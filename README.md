@@ -11,9 +11,9 @@ Calculate some QCTs and combine QCTs calculated in previous steps.
 - Circularity
 - Normalized Wall Thickness
 - Normalized Hydarulic Diameter
-Angles between:
-- RMB and LMB
-- sRUL and BronInt
+- Angles between:
+  - RMB and LMB
+  - sRUL and BronInt
 
 
 Inputs:
