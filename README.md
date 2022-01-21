@@ -2,7 +2,12 @@
 pyqct is a python repository to calculate and extract Quantitative Computed Tomography (QCT) variables. 
 
 # Installation
-
+Install requirements
+```bash
+# if you use viertual environment, activate it. 
+# conda activate
+python -m pip install -r requirements.txt 
+```
 
 
 # extract_QCT
