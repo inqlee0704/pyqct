@@ -78,6 +78,66 @@ def Circularity(branch):
     P = branch.avgInnerPerimeter.values[0]
     return (4 * np.pi * A) / P ** 2
 
+def Eccentricity(branch):
+    if branch.empty:
+        return np.nan
+    minor_inner_D = branch.avgMinorInnerDiam.values[0]
+    major_inner_D = branch.avgMajorInnerDiam.values[0]
+    return minor_inner_D/major_inner_D
+
+
+def LADIVBYCL(branch):
+    if branch.empty:
+        return np.nan
+    inner_A = branch.avgInnerArea.values[0]
+    center_line_l = branch.centerLineLength.values[0]
+    return inner_A/center_line_l
+
+def D_inner(branch):
+    if branch.empty:
+        return np.nan
+    minor_inner_D = branch.avgMinorInnerDiam.values[0]
+    major_inner_D = branch.avgMajorInnerDiam.values[0]
+    return minor_inner_D, major_inner_D
+
+def Area_lumen(branch):
+    if branch.empty:
+        return np.nan
+    inner_A = branch.avgInnerArea.values[0]
+    outer_A = branch.avgOuterArea.values[0]
+    return inner_A, outer_A
+
+def Peri_lumen(branch):
+    if branch.empty:
+        return np.nan
+    inner_P = branch.avgInnerPerimeter.values[0]
+    outer_P = branch.avgOuterPerimeter.values[0]
+    return inner_P, outer_P
+
+    #     WALLAREA
+    #     WALLAREAPCT
+
+def Area_wall(branch):
+    if branch.empty:
+        return np.nan
+    wall_frac = branch.avgWallAreaFraction.values[0]
+    inner_A = branch.avgInnerArea.values[0]
+    outer_A = branch.avgOuterArea.values[0]
+    wall_A = outer_A - inner_A
+    wall_A_p = wall_frac *100
+    return wall_A, wall_A_p
+
+    #     avgavgwallthickness
+    #     WALLTHICKNESSPCT
+# avgAvgWallThickness
+# avgAvgWallThickness/(avgInnerEquivalentCircleDiameter + avgAvgWallThickness)*100%
+def Thickness_wall(branch):
+    if branch.empty:
+        return np.nan
+    wall_th = branch.avgAvgWallThickness.values[0]
+    inner_CD = branch.avgInnerEquivalentCircleDiameter.values[0]
+    wall_th_p = 100 * wall_th / (inner_CD + wall_th)
+    return wall_th, wall_th_p
 
 def WT_pred(row, KOR=False):
     if KOR:
@@ -328,6 +388,26 @@ def main():
             df[f"ADI_RML_{FU}"] = ADI.average[3]
             df[f"ADI_RLL_{FU}"] = ADI.average[4]
 
+
+        # pi10
+        pi10_ = os.path.join(subj_path, f"{Subj}_{Img0}_vida-Pi10.csv")
+        if os.path.exists(pi10_):
+            pi10 = pd.read_csv(pi10_)
+            df[f"whole_tree_all_INSP"] = pi10['pi10_whole_tree_all'].values[0]
+            df[f"whole_tree_leq20_INSP"] = pi10['pi10_whole_tree_leq20'].values[0]
+
+        # histo
+        histo_ = os.path.join(subj_path, f"{Subj}_{Img0}_vida-histo.csv")
+        if os.path.exists(histo_):
+            histo = pd.read_csv(histo_)
+            Lung = histo[histo.location == "both"]
+
+            df[f"both_mean_hu_INSP"] = Lung['mean'].values[0]
+            df[f"both_pct_be_950_INSP"] = Lung['percent-below_-950'].values[0]
+            df[f"both_tissue_volume_cm3_INSP"] = Lung['tissue-volume-cm3'].values[0]
+            df[f"both_total_volume_cm3_INSP"] = Lung['total-volume-cm3'].values[0]
+
+
         # Air meas
         air_meas_ = os.path.join(subj_path, f"{Subj}_{Img0}_vida-airmeas.csv")
         if os.path.exists(air_meas_):
@@ -340,6 +420,11 @@ def main():
             sLUL = air_meas[air_meas.anatomicalName == "LUL"]
             sRUL = air_meas[air_meas.anatomicalName == "RUL"]
             sRLL = air_meas[air_meas.anatomicalName == "RLL"]
+            LB1 = air_meas[air_meas.anatomicalName == "LB1"]
+            LB10 = air_meas[air_meas.anatomicalName == "LB10"]
+            RB1 = air_meas[air_meas.anatomicalName == "RB1"]
+            RB4 = air_meas[air_meas.anatomicalName == "RB4"]
+            RB10 = air_meas[air_meas.anatomicalName == "RB10"]
 
             # Angle_Trachea
             RMB_vector = np.array(
@@ -371,6 +456,67 @@ def main():
             df[f"Cr_sLUL_{Img0}"] = Circularity(sLUL)
             df[f"Cr_sRUL_{Img0}"] = Circularity(sRUL)
             df[f"Cr_sRLL_{Img0}"] = Circularity(sRLL)
+
+            # Eccentircity
+            ecc_lb1 = Eccentricity(LB1)
+            ecc_lb10 = Eccentricity(LB10)
+            ecc_rb1 = Eccentricity(RB1)
+            ecc_rb4 = Eccentricity(RB4)
+            ecc_rb10 = Eccentricity(RB10)
+            df[f"ECCENTRICITY"] = (ecc_lb1 + ecc_lb10 + ecc_rb1 + ecc_rb4 + ecc_rb10)/5
+
+            # LADIVBYCL
+            l_cl_lb1 = LADIVBYCL(LB1)
+            l_cl_lb10 = LADIVBYCL(LB10)
+            l_cl_rb1 = LADIVBYCL(RB1)
+            l_cl_rb4 = LADIVBYCL(RB4)
+            l_cl_rb10 = LADIVBYCL(RB10)
+            df[f"LADIVBYCL"] = (l_cl_lb1 + l_cl_lb10 + l_cl_rb1 + l_cl_rb4 + l_cl_rb10)/5
+
+            # avgminorinnerdiam, avgmajorinnerdiam
+            minor_in_d_lb1, major_in_d_lb1 = D_inner(LB1)
+            minor_in_d_lb10, major_in_d_lb10 = D_inner(LB10)
+            minor_in_d_rb1, major_in_d_rb1 = D_inner(RB1)
+            minor_in_d_rb4, major_in_d_rb4 = D_inner(RB4)
+            minor_in_d_rb10, major_in_d_rb10 = D_inner(RB10)
+            df[f"avgminorinnerdiam"] = (minor_in_d_lb1 + minor_in_d_lb10 + minor_in_d_rb1 + minor_in_d_rb4 + minor_in_d_rb10)/5
+            df[f"avgmajorinnerdiam"] = (major_in_d_lb1 + major_in_d_lb10 + major_in_d_rb1 + major_in_d_rb4 + major_in_d_rb10)/5
+
+            # avginnerarea, avgouterarea
+            in_A_lb1, out_A_lb1 = Area_lumen(LB1)
+            in_A_lb10, out_A_lb10 = Area_lumen(LB10)
+            in_A_rb1, out_A_rb1 = Area_lumen(RB1)
+            in_A_rb4, out_A_rb4 = Area_lumen(RB4)
+            in_A_rb10, out_A_rb10 = Area_lumen(RB10)
+            df[f"avginnerarea"] = (in_A_lb1 + in_A_lb10 + in_A_rb1 + in_A_rb4 + in_A_rb10)/5
+            df[f"avgouterarea"] = (out_A_lb1 + out_A_lb10 + out_A_rb1 + out_A_rb4 + out_A_rb10)/5
+
+            # avginnerperimeter, avgouterperimeter
+            in_P_lb1, out_P_lb1 = Peri_lumen(LB1)
+            in_P_lb10, out_P_lb10 = Peri_lumen(LB10)
+            in_P_rb1, out_P_rb1 = Peri_lumen(RB1)
+            in_P_rb4, out_P_rb4 = Peri_lumen(RB4)
+            in_P_rb10, out_P_rb10 = Peri_lumen(RB10)
+            df[f"avginnerperimeter"] = (in_P_lb1 + in_P_lb10 + in_P_rb1 + in_P_rb4 + in_P_rb10)/5
+            df[f"avgouterperimeter"] = (out_P_lb1 + out_P_lb10 + out_P_rb1 + out_P_rb4 + out_P_rb10)/5
+
+            # WALLAREA, WALLAREAPCT
+            wall_A_lb1, wall_A_p_lb1 = Area_wall(LB1)
+            wall_A_lb10, wall_A_p_lb10 = Area_wall(LB10)
+            wall_A_rb1, wall_A_p_rb1 = Area_wall(RB1)
+            wall_A_rb4, wall_A_p_rb4 = Area_wall(RB4)
+            wall_A_rb10, wall_A_p_rb10 = Area_wall(RB10)
+            df[f"WALLAREA"] = (wall_A_lb1 + wall_A_lb10 + wall_A_rb1 + wall_A_rb4 + wall_A_rb10)/5
+            df[f"WALLAREAPCT"] = (wall_A_p_lb1 + wall_A_p_lb10 + wall_A_p_rb1 + wall_A_p_rb4 + wall_A_p_rb10)/5
+
+            # avgavgwallthickness, WALLTHICKNESSPCT
+            wall_th_lb1, wall_th_p_lb1 = Thickness_wall(LB1)
+            wall_th_lb10, wall_th_p_lb10 = Thickness_wall(LB10)
+            wall_th_rb1, wall_th_p_rb1 = Thickness_wall(RB1)
+            wall_th_rb4, wall_th_p_rb4 = Thickness_wall(RB4)
+            wall_th_rb10, wall_th_p_rb10 = Thickness_wall(RB10)
+            df[f"avgavgwallthickness"] = (wall_th_lb1 + wall_th_lb10 + wall_th_rb1 + wall_th_rb4 + wall_th_rb10)/5
+            df[f"WALLTHICKNESSPCT"] = (wall_th_p_lb1 + wall_th_p_lb10 + wall_th_p_rb1 + wall_th_p_rb4 + wall_th_p_rb10)/5
 
             if demo_available:
                 # Normalized Wall thickness
