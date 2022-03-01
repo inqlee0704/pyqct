@@ -417,13 +417,34 @@ def main():
             LMB = air_meas[air_meas.anatomicalName == "LMB"]
             LLB = air_meas[air_meas.anatomicalName == "LLB"]
             BronInt = air_meas[air_meas.anatomicalName == "BronInt"]
-            sLUL = air_meas[air_meas.anatomicalName == "LUL"]
-            sRUL = air_meas[air_meas.anatomicalName == "RUL"]
-            sRLL = air_meas[air_meas.anatomicalName == "RLL"]
+            LUL = air_meas[air_meas.anatomicalName == "LUL"]
+            RUL = air_meas[air_meas.anatomicalName == "RUL"]
+            RLL = air_meas[air_meas.anatomicalName == "RLL"]
+            
+            # segmental branches
+            # Left Upper Lobe (LUL)
             LB1 = air_meas[air_meas.anatomicalName == "LB1"]
+            LB2 = air_meas[air_meas.anatomicalName == "LB2"]
+            LB3 = air_meas[air_meas.anatomicalName == "LB3"]
+            LB4 = air_meas[air_meas.anatomicalName == "LB4"]
+            LB5 = air_meas[air_meas.anatomicalName == "LB5"]
+            # Left Lower Lobe (LLL)
+            LB6 = air_meas[air_meas.anatomicalName == "LB6"]
+            LB8 = air_meas[air_meas.anatomicalName == "LB8"]
+            LB9 = air_meas[air_meas.anatomicalName == "LB9"]
             LB10 = air_meas[air_meas.anatomicalName == "LB10"]
+            # Right Upper Lobe (RUL)
             RB1 = air_meas[air_meas.anatomicalName == "RB1"]
+            RB2 = air_meas[air_meas.anatomicalName == "RB2"]
+            RB3 = air_meas[air_meas.anatomicalName == "RB3"]
+            # Right Middle Lobe (RML)
             RB4 = air_meas[air_meas.anatomicalName == "RB4"]
+            RB5 = air_meas[air_meas.anatomicalName == "RB5"]
+            # Right Lower Lobe (RLL)
+            RB6 = air_meas[air_meas.anatomicalName == "RB6"]
+            RB7 = air_meas[air_meas.anatomicalName == "RB7"]
+            RB8 = air_meas[air_meas.anatomicalName == "RB8"]
+            RB9 = air_meas[air_meas.anatomicalName == "RB9"]
             RB10 = air_meas[air_meas.anatomicalName == "RB10"]
 
             # Angle_Trachea
@@ -433,8 +454,8 @@ def main():
             LMB_vector = np.array(
                 (LMB.dirCosX.values[0], LMB.dirCosY.values[0], LMB.dirCosZ.values[0])
             )
-            sRUL_vector = np.array(
-                (sRUL.dirCosX.values[0], sRUL.dirCosY.values[0], sRUL.dirCosZ.values[0])
+            RUL_vector = np.array(
+                (RUL.dirCosX.values[0], RUL.dirCosY.values[0], RUL.dirCosZ.values[0])
             )
             BronInt_vector = np.array(
                 (
@@ -445,7 +466,7 @@ def main():
             )
             df[f"Angle_eTrachea_{Img0}"] = Angle_vectors(RMB_vector, LMB_vector)
             # Angle between RUL and BronInt:
-            df[f"Angle_eRMB_{Img0}"] = Angle_vectors(sRUL_vector, BronInt_vector)
+            df[f"Angle_eRMB_{Img0}"] = Angle_vectors(RUL_vector, BronInt_vector)
 
             # Circularity: C = 4*pi*A/P^2; P: perimeter
             df[f"Cr_Trachea_{Img0}"] = Circularity(Trachea)
@@ -453,9 +474,31 @@ def main():
             df[f"Cr_LMB_{Img0}"] = Circularity(LMB)
             df[f"Cr_LLB_{Img0}"] = Circularity(LLB)
             df[f"Cr_BI_{Img0}"] = Circularity(BronInt)
-            df[f"Cr_sLUL_{Img0}"] = Circularity(sLUL)
-            df[f"Cr_sRUL_{Img0}"] = Circularity(sRUL)
-            df[f"Cr_sRLL_{Img0}"] = Circularity(sRLL)
+            cr_LB1  = Circularity(LB1)
+            cr_LB2  = Circularity(LB2)
+            cr_LB3  = Circularity(LB3)
+            cr_LB4  = Circularity(LB4)
+            cr_LB5  = Circularity(LB5)
+            cr_LB6  = Circularity(LB6)
+            cr_LB8  = Circularity(LB8)
+            cr_LB9  = Circularity(LB9)
+            cr_LB10 = Circularity(LB10)
+            cr_RB1  = Circularity(RB1)
+            cr_RB2  = Circularity(RB2)
+            cr_RB3  = Circularity(RB3)
+            cr_RB4  = Circularity(RB4)
+            cr_RB5  = Circularity(RB5)
+            cr_RB6  = Circularity(RB6)
+            cr_RB7  = Circularity(RB7)
+            cr_RB8  = Circularity(RB8)
+            cr_RB9  = Circularity(RB9)
+            cr_RB10 = Circularity(RB10)
+
+            df[f"Cr_sLUL_{Img0}"] = np.mean(cr_LB1+cr_LB2+cr_LB3+cr_LB4+cr_LB5)
+            df[f"Cr_sLLL_{Img0}"] = np.mean(cr_LB6+cr_LB8+cr_LB9+cr_LB10)
+            df[f"Cr_sRUL_{Img0}"] = np.mean(cr_RB1+cr_RB2+cr_RB3)
+            df[f"Cr_sRML_{Img0}"] = np.mean(cr_RB4+cr_RB5)
+            df[f"Cr_sRLL_{Img0}"] = np.mean(cr_RB6+cr_RB7+cr_RB8+cr_RB9+cr_RB10)
 
             # Eccentircity
             ecc_lb1 = Eccentricity(LB1)
@@ -525,9 +568,31 @@ def main():
                 df[f"WTn_LMB_{Img0}"] = WT_norm(LMB, row, KOR)
                 df[f"WTn_LLB_{Img0}"] = WT_norm(LLB, row, KOR)
                 df[f"WTn_BI_{Img0}"] = WT_norm(BronInt, row, KOR)
-                df[f"WTn_sLUL_{Img0}"] = WT_norm(sLUL, row, KOR)
-                df[f"WTn_sRUL_{Img0}"] = WT_norm(sRUL, row, KOR)
-                df[f"WTn_sRLL_{Img0}"] = WT_norm(sRLL, row, KOR)
+                wTn_LB1  = WT_norm(LB1,row,KOR)
+                wTn_LB2  = WT_norm(LB2,row,KOR)
+                wTn_LB3  = WT_norm(LB3,row,KOR)
+                wTn_LB4  = WT_norm(LB4,row,KOR)
+                wTn_LB5  = WT_norm(LB5,row,KOR)
+                wTn_LB6  = WT_norm(LB6,row,KOR)
+                wTn_LB8  = WT_norm(LB8,row,KOR)
+                wTn_LB9  = WT_norm(LB9,row,KOR)
+                wTn_LB10 = WT_norm(LB10,row,KOR)
+                wTn_RB1  = WT_norm(RB1,row,KOR)
+                wTn_RB2  = WT_norm(RB2,row,KOR)
+                wTn_RB3  = WT_norm(RB3,row,KOR)
+                wTn_RB4  = WT_norm(RB4,row,KOR)
+                wTn_RB5  = WT_norm(RB5,row,KOR)
+                wTn_RB6  = WT_norm(RB6,row,KOR)
+                wTn_RB7  = WT_norm(RB7,row,KOR)
+                wTn_RB8  = WT_norm(RB8,row,KOR)
+                wTn_RB9  = WT_norm(RB9,row,KOR)
+                wTn_RB10 = WT_norm(RB10,row,KOR)
+
+                df[f"WTn_sLUL_{Img0}"] = np.mean(wTn_LB1+wTn_LB2+wTn_LB3+wTn_LB4+wTn_LB5)
+                df[f"WTn_sLLL_{Img0}"] = np.mean(wTn_LB6+wTn_LB8+wTn_LB9+wTn_LB10)
+                df[f"WTn_sRUL_{Img0}"] = np.mean(wTn_RB1+wTn_RB2+wTn_RB3)
+                df[f"WTn_sRML_{Img0}"] = np.mean(wTn_RB4+wTn_RB5)
+                df[f"WTn_sRLL_{Img0}"] = np.mean(wTn_RB6+wTn_RB7+wTn_RB8+wTn_RB9+wTn_RB10)
 
                 # Normalized hydraulic diameter: 4A/P
                 df[f"Dhn_Trachea_{Img0}"] = Dh_norm(Trachea, row, KOR)
@@ -535,9 +600,33 @@ def main():
                 df[f"Dhn_LMB_{Img0}"] = Dh_norm(LMB, row, KOR)
                 df[f"Dhn_LLB_{Img0}"] = Dh_norm(LLB, row, KOR)
                 df[f"Dhn_BI_{Img0}"] = Dh_norm(BronInt, row, KOR)
-                df[f"Dhn_sLUL_{Img0}"] = Dh_norm(sLUL, row, KOR)
-                df[f"Dhn_sRUL_{Img0}"] = Dh_norm(sRUL, row, KOR)
-                df[f"Dhn_sRLL_{Img0}"] = Dh_norm(sRLL, row, KOR)
+
+                dhn_LB1  = Dh_norm(LB1,row,KOR)
+                dhn_LB2  = Dh_norm(LB2,row,KOR)
+                dhn_LB3  = Dh_norm(LB3,row,KOR)
+                dhn_LB4  = Dh_norm(LB4,row,KOR)
+                dhn_LB5  = Dh_norm(LB5,row,KOR)
+                dhn_LB6  = Dh_norm(LB6,row,KOR)
+                dhn_LB8  = Dh_norm(LB8,row,KOR)
+                dhn_LB9  = Dh_norm(LB9,row,KOR)
+                dhn_LB10 = Dh_norm(LB10,row,KOR)
+                dhn_RB1  = Dh_norm(RB1,row,KOR)
+                dhn_RB2  = Dh_norm(RB2,row,KOR)
+                dhn_RB3  = Dh_norm(RB3,row,KOR)
+                dhn_RB4  = Dh_norm(RB4,row,KOR)
+                dhn_RB5  = Dh_norm(RB5,row,KOR)
+                dhn_RB6  = Dh_norm(RB6,row,KOR)
+                dhn_RB7  = Dh_norm(RB7,row,KOR)
+                dhn_RB8  = Dh_norm(RB8,row,KOR)
+                dhn_RB9  = Dh_norm(RB9,row,KOR)
+                dhn_RB10 = Dh_norm(RB10,row,KOR)
+
+                df[f"Dhn_sLUL_{Img0}"] = np.mean(dhn_LB1+dhn_LB2+dhn_LB3+dhn_LB4+dhn_LB5)
+                df[f"Dhn_sLLL_{Img0}"] = np.mean(dhn_LB6+dhn_LB8+dhn_LB9+dhn_LB10)
+                df[f"Dhn_sRUL_{Img0}"] = np.mean(dhn_RB1+dhn_RB2+dhn_RB3)
+                df[f"Dhn_sRML_{Img0}"] = np.mean(dhn_RB4+dhn_RB5)
+                df[f"Dhn_sRLL_{Img0}"] = np.mean(dhn_RB6+dhn_RB7+dhn_RB8+dhn_RB9+dhn_RB10)
+
 
             else:
                 df[f"WTn_Trachea_{Img0}"] = "na"
@@ -546,7 +635,9 @@ def main():
                 df[f"WTn_LLB_{Img0}"] = "na"
                 df[f"WTn_BI_{Img0}"] = "na"
                 df[f"WTn_sLUL_{Img0}"] = "na"
+                df[f"WTn_sLLL_{Img0}"] = "na"
                 df[f"WTn_sRUL_{Img0}"] = "na"
+                df[f"WTn_sRML_{Img0}"] = "na"
                 df[f"WTn_sRLL_{Img0}"] = "na"
 
                 df[f"Dhn_Trachea_{Img0}"] = "na"
@@ -555,7 +646,9 @@ def main():
                 df[f"Dhn_LLB_{Img0}"] = "na"
                 df[f"Dhn_BI_{Img0}"] = "na"
                 df[f"Dhn_sLUL_{Img0}"] = "na"
+                df[f"Dhn_sLLL_{Img0}"] = "na"
                 df[f"Dhn_sRUL_{Img0}"] = "na"
+                df[f"Dhn_sRML_{Img0}"] = "na"
                 df[f"Dhn_sRLL_{Img0}"] = "na"
 
             # Save per subject
