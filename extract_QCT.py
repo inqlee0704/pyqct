@@ -522,8 +522,8 @@ def main():
             minor_in_d_rb1, major_in_d_rb1 = D_inner(RB1)
             minor_in_d_rb4, major_in_d_rb4 = D_inner(RB4)
             minor_in_d_rb10, major_in_d_rb10 = D_inner(RB10)
-            df[f"avgminorinnerdiam"] = (minor_in_d_lb1 + minor_in_d_lb10 + minor_in_d_rb1 + minor_in_d_rb4 + minor_in_d_rb10)/5
-            df[f"avgmajorinnerdiam"] = (major_in_d_lb1 + major_in_d_lb10 + major_in_d_rb1 + major_in_d_rb4 + major_in_d_rb10)/5
+            df[f"Dminor"] = (minor_in_d_lb1 + minor_in_d_lb10 + minor_in_d_rb1 + minor_in_d_rb4 + minor_in_d_rb10)/5
+            df[f"Dmajor"] = (major_in_d_lb1 + major_in_d_lb10 + major_in_d_rb1 + major_in_d_rb4 + major_in_d_rb10)/5
 
             # avginnerarea, avgouterarea
             in_A_lb1, out_A_lb1 = Area_lumen(LB1)
@@ -531,8 +531,8 @@ def main():
             in_A_rb1, out_A_rb1 = Area_lumen(RB1)
             in_A_rb4, out_A_rb4 = Area_lumen(RB4)
             in_A_rb10, out_A_rb10 = Area_lumen(RB10)
-            df[f"avginnerarea"] = (in_A_lb1 + in_A_lb10 + in_A_rb1 + in_A_rb4 + in_A_rb10)/5
-            df[f"avgouterarea"] = (out_A_lb1 + out_A_lb10 + out_A_rb1 + out_A_rb4 + out_A_rb10)/5
+            df[f"LA"] = (in_A_lb1 + in_A_lb10 + in_A_rb1 + in_A_rb4 + in_A_rb10)/5
+            df[f"OA"] = (out_A_lb1 + out_A_lb10 + out_A_rb1 + out_A_rb4 + out_A_rb10)/5
 
             # avginnerperimeter, avgouterperimeter
             in_P_lb1, out_P_lb1 = Peri_lumen(LB1)
@@ -540,8 +540,8 @@ def main():
             in_P_rb1, out_P_rb1 = Peri_lumen(RB1)
             in_P_rb4, out_P_rb4 = Peri_lumen(RB4)
             in_P_rb10, out_P_rb10 = Peri_lumen(RB10)
-            df[f"avginnerperimeter"] = (in_P_lb1 + in_P_lb10 + in_P_rb1 + in_P_rb4 + in_P_rb10)/5
-            df[f"avgouterperimeter"] = (out_P_lb1 + out_P_lb10 + out_P_rb1 + out_P_rb4 + out_P_rb10)/5
+            df[f"Peri"] = (in_P_lb1 + in_P_lb10 + in_P_rb1 + in_P_rb4 + in_P_rb10)/5
+            df[f"Peri_o"] = (out_P_lb1 + out_P_lb10 + out_P_rb1 + out_P_rb4 + out_P_rb10)/5
 
             # WALLAREA, WALLAREAPCT
             wall_A_lb1, wall_A_p_lb1 = Area_wall(LB1)
@@ -549,8 +549,8 @@ def main():
             wall_A_rb1, wall_A_p_rb1 = Area_wall(RB1)
             wall_A_rb4, wall_A_p_rb4 = Area_wall(RB4)
             wall_A_rb10, wall_A_p_rb10 = Area_wall(RB10)
-            df[f"WALLAREA"] = (wall_A_lb1 + wall_A_lb10 + wall_A_rb1 + wall_A_rb4 + wall_A_rb10)/5
-            df[f"WALLAREAPCT"] = (wall_A_p_lb1 + wall_A_p_lb10 + wall_A_p_rb1 + wall_A_p_rb4 + wall_A_p_rb10)/5
+            df[f"WA"] = (wall_A_lb1 + wall_A_lb10 + wall_A_rb1 + wall_A_rb4 + wall_A_rb10)/5
+            df[f"WA_pct"] = (wall_A_p_lb1 + wall_A_p_lb10 + wall_A_p_rb1 + wall_A_p_rb4 + wall_A_p_rb10)/5
 
             # avgavgwallthickness, WALLTHICKNESSPCT
             wall_th_lb1, wall_th_p_lb1 = Thickness_wall(LB1)
@@ -558,8 +558,8 @@ def main():
             wall_th_rb1, wall_th_p_rb1 = Thickness_wall(RB1)
             wall_th_rb4, wall_th_p_rb4 = Thickness_wall(RB4)
             wall_th_rb10, wall_th_p_rb10 = Thickness_wall(RB10)
-            df[f"avgavgwallthickness"] = (wall_th_lb1 + wall_th_lb10 + wall_th_rb1 + wall_th_rb4 + wall_th_rb10)/5
-            df[f"WALLTHICKNESSPCT"] = (wall_th_p_lb1 + wall_th_p_lb10 + wall_th_p_rb1 + wall_th_p_rb4 + wall_th_p_rb10)/5
+            df[f"WT"] = (wall_th_lb1 + wall_th_lb10 + wall_th_rb1 + wall_th_rb4 + wall_th_rb10)/5
+            df[f"WT_pct"] = (wall_th_p_lb1 + wall_th_p_lb10 + wall_th_p_rb1 + wall_th_p_rb4 + wall_th_p_rb10)/5
 
             if demo_available:
                 # Normalized Wall thickness
