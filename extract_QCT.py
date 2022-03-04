@@ -536,7 +536,7 @@ def main():
             df[f"LA"] = LA
             OA = (out_A_lb1 + out_A_lb10 + out_A_rb1 + out_A_rb4 + out_A_rb10)/5
             df[f"OA"] = OA
-            
+
             df[f"Dout"] = np.sqrt((4*OA)/np.pi)
 
             # avginnerperimeter, avgouterperimeter
@@ -593,11 +593,11 @@ def main():
                 wTn_RB9  = WT_norm(RB9,row,KOR)
                 wTn_RB10 = WT_norm(RB10,row,KOR)
 
-                df[f"WTn_sLUL_{Img0}"] = np.mean(wTn_LB1+wTn_LB2+wTn_LB3+wTn_LB4+wTn_LB5)
-                df[f"WTn_sLLL_{Img0}"] = np.mean(wTn_LB6+wTn_LB8+wTn_LB9+wTn_LB10)
-                df[f"WTn_sRUL_{Img0}"] = np.mean(wTn_RB1+wTn_RB2+wTn_RB3)
-                df[f"WTn_sRML_{Img0}"] = np.mean(wTn_RB4+wTn_RB5)
-                df[f"WTn_sRLL_{Img0}"] = np.mean(wTn_RB6+wTn_RB7+wTn_RB8+wTn_RB9+wTn_RB10)
+                df[f"WTn_sLUL_{Img0}"] = np.mean(wTn_LB1,wTn_LB2,wTn_LB3,wTn_LB4,wTn_LB5)
+                df[f"WTn_sLLL_{Img0}"] = np.mean(wTn_LB6,wTn_LB8,wTn_LB9,wTn_LB10)
+                df[f"WTn_sRUL_{Img0}"] = np.mean(wTn_RB1,wTn_RB2,wTn_RB3)
+                df[f"WTn_sRML_{Img0}"] = np.mean(wTn_RB4,wTn_RB5)
+                df[f"WTn_sRLL_{Img0}"] = np.mean(wTn_RB6,wTn_RB7,wTn_RB8,wTn_RB9,wTn_RB10)
 
                 # Normalized hydraulic diameter: 4A/P
                 df[f"Dhn_Trachea_{Img0}"] = Dh_norm(Trachea, row, KOR)
@@ -626,11 +626,11 @@ def main():
                 dhn_RB9  = Dh_norm(RB9,row,KOR)
                 dhn_RB10 = Dh_norm(RB10,row,KOR)
 
-                df[f"Dhn_sLUL_{Img0}"] = np.mean(dhn_LB1+dhn_LB2+dhn_LB3+dhn_LB4+dhn_LB5)
-                df[f"Dhn_sLLL_{Img0}"] = np.mean(dhn_LB6+dhn_LB8+dhn_LB9+dhn_LB10)
-                df[f"Dhn_sRUL_{Img0}"] = np.mean(dhn_RB1+dhn_RB2+dhn_RB3)
-                df[f"Dhn_sRML_{Img0}"] = np.mean(dhn_RB4+dhn_RB5)
-                df[f"Dhn_sRLL_{Img0}"] = np.mean(dhn_RB6+dhn_RB7+dhn_RB8+dhn_RB9+dhn_RB10)
+                df[f"Dhn_sLUL_{Img0}"] = np.mean(dhn_LB1,dhn_LB2,dhn_LB3,dhn_LB4,dhn_LB5)
+                df[f"Dhn_sLLL_{Img0}"] = np.mean(dhn_LB6,dhn_LB8,dhn_LB9,dhn_LB10)
+                df[f"Dhn_sRUL_{Img0}"] = np.mean(dhn_RB1,dhn_RB2,dhn_RB3)
+                df[f"Dhn_sRML_{Img0}"] = np.mean(dhn_RB4,dhn_RB5)
+                df[f"Dhn_sRLL_{Img0}"] = np.mean(dhn_RB6,dhn_RB7,dhn_RB8,dhn_RB9,dhn_RB10)
 
 
             else:
