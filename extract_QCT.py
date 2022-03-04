@@ -405,6 +405,7 @@ def main():
             df[f"both_mean_hu_INSP"] = Lung['mean'].values[0]
             df[f"both_pct_be_950_INSP"] = Lung['percent-below_-950'].values[0]
             df[f"both_tissue_volume_cm3_INSP"] = Lung['tissue-volume-cm3'].values[0]
+            df[f"both_air_volume_cm3_INSP"] = Lung['air-volume-cm3'].values[0]
             df[f"both_total_volume_cm3_INSP"] = Lung['total-volume-cm3'].values[0]
 
 
@@ -531,8 +532,12 @@ def main():
             in_A_rb1, out_A_rb1 = Area_lumen(RB1)
             in_A_rb4, out_A_rb4 = Area_lumen(RB4)
             in_A_rb10, out_A_rb10 = Area_lumen(RB10)
-            df[f"LA"] = (in_A_lb1 + in_A_lb10 + in_A_rb1 + in_A_rb4 + in_A_rb10)/5
-            df[f"OA"] = (out_A_lb1 + out_A_lb10 + out_A_rb1 + out_A_rb4 + out_A_rb10)/5
+            LA = (in_A_lb1 + in_A_lb10 + in_A_rb1 + in_A_rb4 + in_A_rb10)/5
+            df[f"LA"] = LA
+            OA = (out_A_lb1 + out_A_lb10 + out_A_rb1 + out_A_rb4 + out_A_rb10)/5
+            df[f"OA"] = OA
+            
+            df[f"Dout"] = np.sqrt((4*OA)/np.pi)
 
             # avginnerperimeter, avgouterperimeter
             in_P_lb1, out_P_lb1 = Peri_lumen(LB1)
