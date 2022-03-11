@@ -36,6 +36,13 @@ outputs
 - _QCT.csv file for each subject in a subject folder
 - _QCT_all.csv file for one project in a project folder
 
+# Quality check 
+Find outliers for each variable.
+```bash
+python quality_check.py csv_path std_factor
+```
+- csv_path: path to csv file (first two columns are Proj and Subj)
+- std_factor: mean +- std * std_factor to determine outliers
 
 # QCTs
 
