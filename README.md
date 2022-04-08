@@ -32,7 +32,7 @@ Inputs:
 - demographics: sample_data/ENV18PM_demo.csv
 
 
-outputs 
+Outputs 
 - _QCT.csv file for each subject in a subject folder
 - _QCT_all.csv file for one project in a project folder
 
@@ -47,6 +47,14 @@ python quality_check.py csv_path std_factor
 # 3. Statistical Analysis
 
 ## Correlation
+Calculate correlations
+```bash
+python run_corr.py {csv_path} {equal_var}
+```
+- csv_path: path to csv file (first two columns are Proj and Subj)
+
+Outputs:
+- excel file: f'{csv_path}_corr.xlsx'
 
 ## Correlation plots
 
