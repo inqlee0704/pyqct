@@ -10,7 +10,7 @@ python -m pip install -r requirements.txt
 ```
 
 
-# extract_QCT
+# 1. Extract QCT
 Calculate some QCTs and combine QCTs calculated in previous steps.
 ## run extract_QCT
 python extract_QCT.py Proj_path Demo_path Proj
@@ -36,13 +36,20 @@ outputs
 - _QCT.csv file for each subject in a subject folder
 - _QCT_all.csv file for one project in a project folder
 
-# Quality check 
+# 2. Quality check 
 Find outliers for each variable.
 ```bash
 python quality_check.py csv_path std_factor
 ```
 - csv_path: path to csv file (first two columns are Proj and Subj)
 - std_factor: mean +- std * std_factor to determine outliers
+
+# 3. Statistical Analysis
+
+## Correlation
+
+## Correlation plots
+
 
 # QCTs
 
