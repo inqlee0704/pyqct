@@ -53,11 +53,20 @@ python run_corr.py {csv_path} {equal_var}
 ```
 - csv_path: path to csv file (first two columns are Proj and Subj)
 
-Outputs:
+Output:
 - excel file: f'{csv_path}_corr.xlsx'
 
 ## Correlation plots
+Plot correlation
+```bash
+python plot_corr.py {excel_path} {var1} {var2}
+```
+- excel_path: *_corr.xlsx
+- var1: first variable (x-axis)
+- var2: second variable (y-axis)
 
+Output:
+- *_corr_{var1}_{var2}.png
 
 # QCTs
 

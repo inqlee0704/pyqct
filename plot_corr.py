@@ -1,33 +1,47 @@
 import pandas as pd
 import sys
-from scipy.stats import ttest_ind, ttest_rel
+import matplotlib.pyplot as plt
+import numpy as np
 
-# run t-test
-def calculate_pvalues(df, equal_var=False):
-    dfcols = pd.DataFrame(columns=df.columns)
-    pvalues = dfcols.transpose().join(dfcols, how='outer')
-    for r in df.columns:
-        for c in df.columns:
-            pvalues[r][c] = round(ttest_ind(df[r],df[c],nan_policy='omit',equal_var=equal_var)[1], 4)
-    return pvalues
+def plot_corr(df,p,corr,var1,var2,save_path):
+
+    df_temp = df.loc[:,[var1,var2]].dropna()
+    x = df_temp[var1].dropna().values
+    y = df_temp[var2].dropna().values
+    plt.figure(dpi=1000)
+    plt.scatter(x, y, s=10)
+    plt.xlabel(var1,fontsize=18)
+    plt.ylabel(var2,fontsize=18)
+
+    z = np.polyfit(x, y, 1)
+    f = np.poly1d(z)
+    Xs = np.linspace(min(x),max(x),num=20)
+    plt.plot(Xs,f(Xs),"r--")
+    text1 = f'r = {corr:0.3f}'
+    if p<0.001:
+        text2 = f'p < 0.001'
+    else:
+        text2 = f'p = {p:0.3f}'
+    plt.text(x=min(x), y=max(y)-max(y)*0.1, s=text1, fontsize=14)
+    plt.text(x=min(x), y=max(y)-max(y)*0.2, s=text2, fontsize=14)
+    plt.grid(True)
+    plt.savefig(save_path)
 
 def main():
+    # excel file
     df_path = str(sys.argv[1])
-    equal_var = False 
-    raw_df = pd.read_csv(df_path)
-    print(f"Successfully read: {df_path}!\n")
-    str_cols = ['Proj','Subj','CaseType']
-    drop_cols = [x for x in str_cols if x in raw_df.columns ]
-    df = raw_df.drop(columns=drop_cols)
-    print(f"Dropping {drop_cols} columns\n")
-    print(f"Calculating correlations. . .\n")
-    df_corr = df.corr()
-    df_pvalues = calculate_pvalues(df, equal_var)
-    print(f"Saving the results. . .\n")
-    with pd.ExcelWriter(f'{df_path[:-4]}_corr.xlsx') as writer:
-        df_corr.to_excel(writer,sheet_name='corr')
-        df_pvalues.to_excel(writer, sheet_name='p-value')
-        raw_df.to_excel(writer,sheet_name='data',index=False)
+    var1 = str(sys.argv[2])
+    var2 = str(sys.argv[3])
+    save_path = f'{df_path[:-5]}_{var1}_{var2}.png'
+    df_corr = pd.read_excel(df_path,sheet_name='corr',index_col=0)
+    df_p = pd.read_excel(df_path,sheet_name='p-value',index_col=0)
+    df = pd.read_excel(df_path,sheet_name='data',index_col=0)
+
+    corr = df_corr.loc[var1,var2]
+    p = df_p.loc[var1,var2]
+    plot_corr(df,p,corr,var1,var2,save_path)
+
+
 
 if __name__ == "__main__":
     main()
