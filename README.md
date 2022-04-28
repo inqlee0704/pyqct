@@ -89,3 +89,16 @@ cd sample_data/ENV18PM/ENV18PM_PMSN12002/
 ## RRAVC
 
 
+# Data Organization
+## Sort dicom files 
+Run this when more than one dicom series are stored in one folder.
+
+```bash
+cd utils
+python sort_dicom_series.py {root_path} {save_path}
+```
+convert: Proj/date/Subj/*.dcm => Proj/Subj/DCM_series/*.dcm\
+**Need to modify the code if data structure is different**
+
+- Proj_path: root path to dicom directory, ex) /d/AnimalCT_2021
+- save_path: save_path, ex) /d/AnimalCT_2021_sorted 
