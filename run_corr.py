@@ -1,14 +1,23 @@
 import pandas as pd
+import numpy as np
 import sys
+from tqdm.auto import tqdm
 from scipy.stats import ttest_ind, ttest_rel
 
 # run t-test
 def calculate_pvalues(df, equal_var=False):
     dfcols = pd.DataFrame(columns=df.columns)
     pvalues = dfcols.transpose().join(dfcols, how='outer')
-    for r in df.columns:
+    pbar = tqdm(df.columns)
+    for r in pbar:
         for c in df.columns:
-            pvalues[r][c] = round(ttest_ind(df[r],df[c],nan_policy='omit',equal_var=equal_var)[1], 4)
+            try:
+                pvalues[r][c] = ttest_ind(df[r],df[c],nan_policy='omit',equal_var=equal_var)[1]
+            except:
+                print(df[r])
+                print(df[c])
+                pvalues[r][c] = np.nan
+                print(pvalues[r][c])
     return pvalues
 
 def main():
