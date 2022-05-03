@@ -95,21 +95,21 @@ def LADIVBYCL(branch):
 
 def D_inner(branch):
     if branch.empty:
-        return np.nan
+        return np.nan, np.nan
     minor_inner_D = branch.avgMinorInnerDiam.values[0]
     major_inner_D = branch.avgMajorInnerDiam.values[0]
     return minor_inner_D, major_inner_D
 
 def Area_lumen(branch):
     if branch.empty:
-        return np.nan
+        return np.nan, np.nan
     inner_A = branch.avgInnerArea.values[0]
     outer_A = branch.avgOuterArea.values[0]
     return inner_A, outer_A
 
 def Peri_lumen(branch):
     if branch.empty:
-        return np.nan
+        return np.nan, np.nan
     inner_P = branch.avgInnerPerimeter.values[0]
     outer_P = branch.avgOuterPerimeter.values[0]
     return inner_P, outer_P
@@ -119,7 +119,7 @@ def Peri_lumen(branch):
 
 def Area_wall(branch):
     if branch.empty:
-        return np.nan
+        return np.nan, np.nan
     wall_frac = branch.avgWallAreaFraction.values[0]
     inner_A = branch.avgInnerArea.values[0]
     outer_A = branch.avgOuterArea.values[0]
@@ -133,7 +133,7 @@ def Area_wall(branch):
 # avgAvgWallThickness/(avgInnerEquivalentCircleDiameter + avgAvgWallThickness)*100%
 def Thickness_wall(branch):
     if branch.empty:
-        return np.nan
+        return np.nan, np.nan
     wall_th = branch.avgAvgWallThickness.values[0]
     inner_CD = branch.avgInnerEquivalentCircleDiameter.values[0]
     wall_th_p = 100 * wall_th / (inner_CD + wall_th)
