@@ -7,6 +7,8 @@ from tqdm.auto import tqdm
 import pydicom
 from tqdm.auto import tqdm
 
+# Assume data structure of:
+# Proj/date/Subj/*.dcm
 def clean_text(string):
     # clean and standardize text descriptions, which makes searching files easier
     forbidden_symbols = ["*", ".", ",", "\"", "\\", "/", "|", "[", "]", ":", ";", " ", "(", ")"]
@@ -29,7 +31,7 @@ def main():
 
     if not os.path.exists(save_path):
         os.makedirs(save_path)
-        
+
     unsortedList = []
     for root, _, files in os.walk(root_path):
         for file in files: 
