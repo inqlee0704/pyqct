@@ -2,23 +2,27 @@ import pandas as pd
 import numpy as np
 import sys
 from tqdm.auto import tqdm
-from scipy.stats import ttest_ind, ttest_rel
+from scipy.stats.stats import pearsonr
 
-# run t-test
-def calculate_pvalues(df, equal_var=False):
+def get_corr_pvalues(df):
+    df.dropna(axis='columns',how='all',inplace=True)
     dfcols = pd.DataFrame(columns=df.columns)
+    corrs = dfcols.transpose().join(dfcols, how='outer')
     pvalues = dfcols.transpose().join(dfcols, how='outer')
     pbar = tqdm(df.columns)
     for r in pbar:
+        x = df[r]
         for c in df.columns:
+            y = df[c]
+            not_nan = ~np.logical_or(np.isnan(x),np.isnan(y))
             try:
-                pvalues[r][c] = ttest_ind(df[r],df[c],nan_policy='omit',equal_var=equal_var)[1]
+                corrs[r][c], pvalues[r][c] = pearsonr(x[not_nan],y[not_nan])
             except:
-                print(df[r])
-                print(df[c])
+                print("P-value can not be calculated for: ")
+                print(r,c)
                 pvalues[r][c] = np.nan
-                print(pvalues[r][c])
-    return pvalues
+                corrs[r][c] = np.nan
+    return corrs, pvalues
 
 def main():
     df_path = str(sys.argv[1])
@@ -30,8 +34,7 @@ def main():
     df = raw_df.drop(columns=drop_cols)
     print(f"Dropping {drop_cols} columns\n")
     print(f"Calculating correlations. . .\n")
-    df_corr = df.corr()
-    df_pvalues = calculate_pvalues(df, equal_var)
+    df_corr, df_pvalues = get_corr_pvalues(df)
     print(f"Saving the results. . .\n")
     with pd.ExcelWriter(f'{df_path[:-4]}_corr.xlsx') as writer:
         df_corr.to_excel(writer,sheet_name='corr')
