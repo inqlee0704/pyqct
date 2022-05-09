@@ -47,6 +47,8 @@ import pandas as pd
 import numpy as np
 import os
 import sys
+import warnings
+warnings.simplefilter(action='ignore', category=pd.errors.PerformanceWarning)
 
 
 class CFG:
