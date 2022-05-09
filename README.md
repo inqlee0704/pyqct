@@ -53,7 +53,7 @@ python quality_check.py csv_path std_factor
 ## Correlation
 Calculate correlations
 ```bash
-python run_corr.py {csv_path} {equal_var}
+python run_corr.py {csv_path}
 ```
 - csv_path: path to csv file (first two columns are Proj and Subj)
 

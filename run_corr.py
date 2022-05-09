@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import sys
 from tqdm.auto import tqdm
-from scipy.stats.stats import pearsonr
+from scipy.stats import pearsonr
 
 def get_corr_pvalues(df):
     df.dropna(axis='columns',how='all',inplace=True)
@@ -26,7 +26,6 @@ def get_corr_pvalues(df):
 
 def main():
     df_path = str(sys.argv[1])
-    equal_var = False 
     raw_df = pd.read_csv(df_path)
     print(f"Successfully read: {df_path}!\n")
     str_cols = ['Proj','Subj','CaseType','dis']
