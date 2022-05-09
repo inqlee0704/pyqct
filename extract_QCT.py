@@ -45,6 +45,7 @@
 # ##############################################################################
 import pandas as pd
 import numpy as np
+from tqdm.auto import tqdm
 import os
 import sys
 import warnings
@@ -228,7 +229,8 @@ def main():
         print(f"{demo_path} cant be found.")
         print("Extracting QCTs without demo.")
 
-    for i, Subj in enumerate(Subjs):
+    pbar = tqdm(enumerate(Subjs),total=len(Subjs))
+    for i, Subj in pbar:
         subj_path = os.path.join(path, f"{Proj}_{Subj}")
         df = pd.DataFrame({"Proj": [Proj], "Subj": [Subj]})
         # variable_ : path of the variable
