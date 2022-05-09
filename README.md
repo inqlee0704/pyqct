@@ -94,6 +94,11 @@ cd sample_data/ENV18PM/ENV18PM_PMSN12002/
 
 
 # Data Organization
+## Merge data
+Merge two csv files based on Proj and Subj
+```bash
+python merge_csv {df_left_path} {df_right_path} {save_path}
+```
 ## Sort dicom files 
 Run this when more than one dicom series are stored in one folder.
 
