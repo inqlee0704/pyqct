@@ -4,8 +4,12 @@ pyqct is a python repository to calculate and extract Quantitative Computed Tomo
 # Installation
 Install requirements
 ```bash
-# if you use viertual environment, activate it. 
-# conda activate
+git clone https://github.com/inqlee0704/pyqct.git
+# if you don't have viertual environment, create it
+conda create --name pyqct_test python=3.8
+# and activate it.
+conda activate pyqct_test
+# Let's install requirement packages.
 python -m pip install -r requirements.txt 
 ```
 
