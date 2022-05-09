@@ -29,7 +29,7 @@ def main():
     equal_var = False 
     raw_df = pd.read_csv(df_path)
     print(f"Successfully read: {df_path}!\n")
-    str_cols = ['Proj','Subj','CaseType']
+    str_cols = ['Proj','Subj','CaseType','dis']
     drop_cols = [x for x in str_cols if x in raw_df.columns ]
     df = raw_df.drop(columns=drop_cols)
     print(f"Dropping {drop_cols} columns\n")
