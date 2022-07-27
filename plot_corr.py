@@ -1,29 +1,27 @@
 import pandas as pd
 import sys
 import matplotlib.pyplot as plt
+import seaborn as sns
 import numpy as np
+sns.set_theme(color_codes=True)
+sns.set(rc={'figure.figsize':(9,9)},font_scale=1.5)
+sns.set_style("white")
 
 def plot_corr(df,p,corr,var1,var2,save_path):
-
     df_temp = df.loc[:,[var1,var2]].dropna()
     x = df_temp[var1].dropna().values
     y = df_temp[var2].dropna().values
-    plt.figure(dpi=1000)
-    plt.scatter(x, y, s=10)
-    plt.xlabel(var1,fontsize=18)
-    plt.ylabel(var2,fontsize=18)
 
-    z = np.polyfit(x, y, 1)
-    f = np.poly1d(z)
-    Xs = np.linspace(min(x),max(x),num=20)
-    plt.plot(Xs,f(Xs),"r--")
+    fig, ax = plt.subplots()
+    sns.scatterplot(x=var1,y=var2,data=df,ax=ax,s=70)
+    sns.regplot(x=var1,y=var2,color='k',data=df,scatter=False,ax=ax)
     text1 = f'r = {corr:0.3f}'
     if p<0.001:
         text2 = f'p < 0.001'
     else:
         text2 = f'p = {p:0.3f}'
-    plt.text(x=min(x), y=max(y)-max(y)*0.1, s=text1, fontsize=14)
-    plt.text(x=min(x), y=max(y)-max(y)*0.2, s=text2, fontsize=14)
+    plt.text(x=min(x), y=max(y)-max(y)*0.05, s=text1)
+    plt.text(x=min(x), y=max(y)-max(y)*0.1, s=text2)
     plt.grid(True)
     plt.savefig(save_path)
 
